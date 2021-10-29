@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -32,7 +31,6 @@ class RegisterType extends AbstractType
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Vos mot de passe ne correspondent pas',
                 'label' => 'Votre mot de passe',
                 'required' => true,
                 'first_options' => [
@@ -42,7 +40,8 @@ class RegisterType extends AbstractType
                     ]
                 ],
                 'second_options' => [
-                    'label' => 'Confirmez votre mot de passe','attr' => [
+                    'label' => 'Confirmez votre mot de passe',
+                    'attr' => [
                         'placeholder' => 'Merci confirmez votre mot de passe'
                     ]
                 ]
