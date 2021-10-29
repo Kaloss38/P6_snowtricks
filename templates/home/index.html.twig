@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - Le meilleur des tricks{% endblock %}
+    
+{% block content %}
+    <section id="present-home-container" class="mb-2">
+        <img src="{{ asset('assets/images/home-present.jpg') }}" alt="snowboard-man">
+        <div class="centered">
+            <h1 class="display-3">SNOWTRICKS</h1>
+            <h2 id="home-subtitle" class="display-4 p-2">LE MEILLEUR DES TRICKS</h2>
+        </div>
+    </section>
+    <div class="container">
+        <h2 class="display-4 text-center mb-3">Tous les tricks</h2>
+        <section id="trickslist-home-container" class="d-flex justify-content-between mb-3">
+            <div class="card">
+                <img class="card-img-top" src=".{{ asset('assets/images/home-present.jpg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="{{ asset('assets/images/home-present.jpg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="{{ asset('assets/images/home-present.jpg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="{{ asset('assets/images/home-present.jpg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+{% endblock %}
