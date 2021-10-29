@@ -31,13 +31,13 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="{{ path('home')}}">SnowTricks</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-item-custom">
+            <div class="navbar-item-custom ml-auto">
             {% if app.user %}
                 <a href="#">Tricks</a> | <a href="{{ path('app_logout') }}">Déconnexion</a>
             {% else %}
@@ -51,10 +51,8 @@
 <main role="main">
 
     
-    <div class="container marketing {% if block('carousel') is not defined %}mt-5{% endif %} ">
         {% block content %}
         {% endblock %}
-    </div><!-- /.container -->
 
     <!-- FOOTER -->
     <footer class="footer-custom">
