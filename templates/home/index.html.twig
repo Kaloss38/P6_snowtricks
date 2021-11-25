@@ -10,33 +10,28 @@
             <h2 id="home-subtitle" class="display-4 p-2">LE MEILLEUR DES TRICKS</h2>
         </div>
     </section>
-    <div class="container">
+    <div class="container-lg">
         <h2 class="display-4 text-center mb-3">Tous les tricks</h2>
-        <section id="trickslist-home-container" class="d-flex justify-content-between mb-3">
-            <div class="card">
-                <img class="card-img-top" src=".{{ asset('assets/images/home-present.jpg') }}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
+        <section id="trickslist-home-container" class="d-flex flex-wrap justify-content-between mb-3">
+            {% for trick in tricks %}
+                
+                
+                <div class="m-2 col-2 card">
+                    {% for media in trick.media %}
+                        {% if media.isThumbnail %}
+                        <img class="card-img-top" src="{{ asset("assets/images/tricks/"~ media.link)}}" alt="snowboard {{ trick.name }}">
+                        {% endif %}
+                        
+                    {% endfor %}
+                    
+                    <div class="card-body d-flex">
+                            <a href="{{ path('trick', {'slug' : trick.slug}) }}">{{ trick.name }}</a>
+                            <a href=""><i class="fas fa-pencil-alt ml-2 mt-1"></i></a>
+                            <a href=""><i class="fas fa-trash-alt ml-2 mt-1"></i></a>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{ asset('assets/images/home-present.jpg') }}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{ asset('assets/images/home-present.jpg') }}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{ asset('assets/images/home-present.jpg') }}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                </div>
-            </div>
+            {% endfor %}
+            
         </section>
     </div>
     
