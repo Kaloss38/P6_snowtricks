@@ -13,37 +13,50 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class HandlerMedias extends AbstractController{
     
     private $slugger;
+    private $em;
 
     public function __construct(SluggerInterface $slugger, EntityManagerInterface $em)
     {
+        $this->em = $em;
         $this->slugger = $slugger;
     }
 
-    public function addThumbnail(UploadedFile $file)
+    public function addPicture(UploadedFile $file, Trick $trick, $isThumbnail = 0)
     {
-        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = $this->slugger->slug($originalFilename);
-        $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-        $media = new Media();
-        try {
-            $file->move(
-                $this->getParameter('app.pictures.directory'),
-                $newFilename
-            );
+            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $this->slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+            
+            try {
+                $file->move(
+                    $this->getParameter('app.pictures.directory'),
+                    $newFilename
+                );
+                $media = new Media();
+                $media->setLink($newFilename);
+                $media->setType('image');
+                $media->setIsThumbnail($isThumbnail);
+                $media->setTrick($trick);
 
-            $media->setLink($newFilename);
-            $media->setType('image');
-            $media->setIsThumbnail(1);
+                $this->em->persist($media);
 
-        } catch (FileException $e) {
-            $this->addFlash('error', "L'image ne s'est pas enregistrée.");
-        }
+            } catch (FileException $e) {
+                $this->addFlash('error', "L'image ne s'est pas enregistrée.");
+            }
 
-        return $media;
+            return $media;
     }
 
-    private function moveFile()
+    public function addVideo(string $iframe,Trick $trick)
     {
+        $media = new Media();
+        $media->setLink($iframe);
+        $media->setType('video');
+        $media->setIsThumbnail(0);
+        $media->setTrick($trick);
 
+        $this->em->persist($media);  
+        
+        return $media;
     }
 }

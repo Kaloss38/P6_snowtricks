@@ -5,10 +5,16 @@ namespace App\Entity;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
+ * @UniqueEntity(
+ *      fields={"name", "slug"},
+ *      errorPath="slug",
+ *      message="Ce nom de Trick est déjà utilisé"
+ * )
  */
 class Trick
 {
@@ -20,12 +26,12 @@ class Trick
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
 
@@ -45,14 +51,21 @@ class Trick
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $author;
-
-    /**
      * @ORM\OneToMany(targetEntity=Media::class, mappedBy="trick")
      */
     private $media;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tricks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Group::class, inversedBy="tricks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $relatedGroup;
 
     public function __construct()
     {
@@ -123,19 +136,7 @@ class Trick
 
         return $this;
     }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): self
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection|Media[]
      */
@@ -162,6 +163,30 @@ class Trick
                 $medium->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getRelatedGroup(): ?Group
+    {
+        return $this->relatedGroup;
+    }
+
+    public function setRelatedGroup(?Group $relatedGroup): self
+    {
+        $this->relatedGroup = $relatedGroup;
 
         return $this;
     }

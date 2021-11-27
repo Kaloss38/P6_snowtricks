@@ -38,20 +38,43 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setSlug($this->slugger->slug($trick->getName()));
-            $trick->setAuthor($this->getUser()->getPseudo());
+            $trick->setUser($this->getUser());
             $dateTime = new DateTime();
             $trick->setCreatedAt($dateTime);
             
             $thumbnail = $form['thumbnail']->getData();
-            $newThumbnail = $handlerMedias->addThumbnail($thumbnail, $trick);
-            $trick->addMedium($newThumbnail);
-            $this->em->persist($newThumbnail);
-            $this->em->persist($trick);
+
+            $handlerMedias->addPicture($thumbnail, $trick, 1);
+            
+            $picturesCount = count($form['medias']->getData());
+            
+            for($i = 0; $i < $picturesCount; $i++)
+            {
+                $picture = $form['medias'][$i]['picturefile']->getData();
+
+                $newPicture = $handlerMedias->addPicture($picture, $trick);
+
+                $trick->addMedium($newPicture);
+            }
+
+            $videosCount = count($form['videos']->getData());
+
+            for($i = 0; $i < $videosCount; $i++)
+            {
+                $video = $form['videos'][$i]['videoframe']->getData();
+                
+                $newVideo = $handlerMedias->addVideo($video, $trick);
+
+                $trick->addMedium($newVideo);
+
+            }  
+
+            $this->em->persist($trick);    
             $this->em->flush();
+
+            return $this->redirectToRoute('home');
         }
          
-
-        
         return $this->render('trick/add.html.twig', [
             'form' => $form->createView()
         ]);
