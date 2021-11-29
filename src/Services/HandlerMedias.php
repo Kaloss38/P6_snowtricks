@@ -23,40 +23,72 @@ class HandlerMedias extends AbstractController{
 
     public function addPicture(UploadedFile $file, Trick $trick, $isThumbnail = 0)
     {
-            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = $this->slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-            
-            try {
-                $file->move(
-                    $this->getParameter('app.pictures.directory'),
-                    $newFilename
-                );
-                $media = new Media();
-                $media->setLink($newFilename);
-                $media->setType('image');
-                $media->setIsThumbnail($isThumbnail);
-                $media->setTrick($trick);
-
-                $this->em->persist($media);
-
-            } catch (FileException $e) {
-                $this->addFlash('error', "L'image ne s'est pas enregistrée.");
-            }
-
-            return $media;
+            $newPicture = $this->movePicture($file);
+            $this->savePicture($trick, $newPicture, $isThumbnail);
     }
 
-    public function addVideo(string $iframe,Trick $trick)
+    public function addPictures(array $pictures, Trick $trick)
+    {
+        foreach($pictures as $key => $picture)
+        {
+            $newPicture = $this->movePicture($picture['picturefile']);
+            $trick->getMedia()->toArray()[$key]->setType('image');
+            $trick->getMedia()->toArray()[$key]->setIsThumbnail(0);
+            $trick->getMedia()->toArray()[$key]->setLink($newPicture);
+        }
+    }
+
+    private function movePicture(UploadedFile $file)
+    {
+        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $this->slugger->slug($originalFilename);
+        $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+        
+        try {
+            $file->move(
+                $this->getParameter('app.pictures.directory'),
+                $newFilename
+            );
+            
+            
+        } catch (FileException $e) {
+            $this->addFlash('error', "L'image ne s'est pas enregistrée.");
+        }
+
+        return $newFilename;    
+    }
+    
+
+    private function savePicture(Trick $trick, $newFilename, $isThumbnail)
     {
         $media = new Media();
-        $media->setLink($iframe);
-        $media->setType('video');
-        $media->setIsThumbnail(0);
-        $media->setTrick($trick);
+        $media->setLink($newFilename);
+        $media->setType('image');
+        $media->setIsThumbnail($isThumbnail);
+        $media->setTrick($trick); 
 
-        $this->em->persist($media);  
+        $trick->addMedium($media);
         
-        return $media;
+        $this->em->persist($media);
+
+        return $media ;
+    }
+
+    public function addVideo($videos,Trick $trick)
+    {
+        foreach($videos as $key => $video)
+        {
+            $newVideo = $videos[$key]['videoframe']->getData();
+
+            $media = new Media();
+            $media->setLink($newVideo);
+            $media->setType('video');
+            $media->setIsThumbnail(0);
+            $media->setTrick($trick);
+
+            $trick->addMedium($media);
+
+            $this->em->persist($media);  
+        }
     }
 }

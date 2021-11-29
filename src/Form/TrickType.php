@@ -63,10 +63,9 @@ class TrickType extends AbstractType
                     'placeholder' => 'Votre description...'
                 ]    
             ])
-            ->add('medias', CollectionType::class,[
+            ->add('media', CollectionType::class,[
                 'label' => 'Ajoutez une ou des photos à la gallerie',
                 'entry_type' =>  PictureType::class,
-                'mapped' => false,
                 'by_reference' => false,
                 'allow_add' => true
             ])

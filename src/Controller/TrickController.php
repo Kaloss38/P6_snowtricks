@@ -49,33 +49,14 @@ class TrickController extends AbstractController
             $group->addTrick($trick);
 
             $thumbnail = $form['thumbnail']->getData();
-
             $handlerMedias->addPicture($thumbnail, $trick, 1);
             
-            $picturesCount = count($form['medias']->getData());
-            
-            for($i = 0; $i < $picturesCount; $i++)
-            {
-                $picture = $form['medias'][$i]['picturefile']->getData();
+            $pictures = $request->files->all()['trick']['media'];
+            $handlerMedias->addPictures($pictures, $trick);
 
-                $newPicture = $handlerMedias->addPicture($picture, $trick);
+            $videos= $form['videos'];
+            $handlerMedias->addVideo($videos, $trick);
 
-                $trick->addMedium($newPicture);
-            }
-
-            $videosCount = count($form['videos']->getData());
-
-            for($i = 0; $i < $videosCount; $i++)
-            {
-                $video = $form['videos'][$i]['videoframe']->getData();
-                
-                $newVideo = $handlerMedias->addVideo($video, $trick);
-
-                $trick->addMedium($newVideo);
-
-            }  
-
-            
             $this->em->persist($group);
             $this->em->persist($trick);    
             $this->em->flush();
@@ -99,9 +80,11 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{slug}/edit", name="trick_edit")
      */
-    public function edit($slug)
+    public function edit(Trick $trick)
     {
-
+        return $this->render('trick/edit.html.twig', [
+            
+        ]);
     }
 
     /**

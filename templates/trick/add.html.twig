@@ -16,15 +16,15 @@
               {{ form_row(form.description) }}
 
               <div id="medias-fields-list"
-                data-prototype="{{ form_widget(form.medias.vars.prototype)|e }}"
+                data-prototype="{{ form_widget(form.media.vars.prototype)|e }}"
                 data-widget-tags="{{ '<p></p>'|e }}"
                 data-widget-counter="1">
 
-                {{ form_row(form.medias) }}
+                {{ form_row(form.media) }}
         
                   <div class="custom-file">
-                    <input type="file" id="trick_medias_0_picturefile" name="trick[medias][0][picturefile]" lang="fr" class="custom-file-input">
-                    <label for="trick_medias_0_picturefile" class="custom-file-label"></label>
+                    <input type="file" id="trick_media_0_picturefile" name="trick[media][0][picturefile]" lang="fr" class="custom-file-input">
+                    <label for="trick_media_0_picturefile" class="custom-file-label"></label>
                   </div>
               </div>
               <button type="button" class="add-another-collection-widget" data-list-selector="#medias-fields-list">
