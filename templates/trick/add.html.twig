@@ -9,6 +9,8 @@
 
               {{ form_row(form.name) }}
 
+              {{ form_row(form.relatedGroup) }}
+
               {{ form_row(form.thumbnail) }}
 
               {{ form_row(form.description) }}
@@ -37,7 +39,7 @@
                 {{ form_row(form.videos) }}
 
                   <div class="custom-file">
-                    <textarea id="trick_videos_0_picturefile" name="trick[videos][0][videoframe]" lang="fr" class="form-control"></textarea>
+                    <input type="text" id="trick_videos_0_picturefile" name="trick[videos][0][videoframe]" lang="fr" class="form-control"></textarea>
                     <label for="trick_videos_0_videoframe"></label>
                   </div>
               </div>

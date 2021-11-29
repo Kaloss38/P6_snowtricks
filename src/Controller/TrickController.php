@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use DateTime;
+use App\Entity\Group;
 use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Services\HandlerMedias;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,7 @@ class TrickController extends AbstractController
     public function add(Request $request, HandlerMedias $handlerMedias): Response
     {
         $trick = new Trick();
-
+        
         $form = $this->createForm(TrickType::class, $trick);
 
         $form->handleRequest($request);
@@ -42,6 +43,11 @@ class TrickController extends AbstractController
             $dateTime = new DateTime();
             $trick->setCreatedAt($dateTime);
             
+
+            $group = new Group();
+            $group->setName($form['relatedGroup']->getData());
+            $group->addTrick($trick);
+
             $thumbnail = $form['thumbnail']->getData();
 
             $handlerMedias->addPicture($thumbnail, $trick, 1);
@@ -69,6 +75,8 @@ class TrickController extends AbstractController
 
             }  
 
+            
+            $this->em->persist($group);
             $this->em->persist($trick);    
             $this->em->flush();
 
@@ -97,7 +105,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/trick/{slug}/delete", name="trick_delete")
+     * @Route("/trick/{id}/delete", name="trick_delete")
      */
     public function delete($slug)
     {
