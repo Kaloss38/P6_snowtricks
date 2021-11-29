@@ -8,10 +8,21 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity(
+ *      fields = "email",
+ *      message = "Adresse email déjà utilisée."
+ * )
+ * @UniqueEntity(
+ *      fields = "username",
+ *      message = "Nom d'utilisateur déjà utilisé."
+ * )
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -24,11 +35,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "'{{ value }}' n'est pas un e-mail valide."
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=20, unique=true)
+     * @Assert\NotBlank(
+     *      message = "Le pseudo ne doit pas être vide."
+     * )
+     * @Assert\NotNull(
+     *      message = "Le pseudo ne doit pas être vide.",
+     * )
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 20,
+     *      minMessage = "Le pseudo doit contenir {{ limit }} caractères minimum.",
+     *      maxMessage = "Le pseudo doit contenir {{ limit }} caractères maximum."
+     * )
      */
     private $pseudo;
 
@@ -40,6 +66,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(
+     *      message = "Le mot de passe ne doit pas être vide.",
+     * )
+     * @Assert\NotNull(
+     *      message = "Le mot de passe ne doit pas être vide.",
+     * )
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Votre mot de passe doit contenir {{ limit }} caractères minimum.",
+     *      maxMessage = "Votre mot de passe doit contenir {{ limit }} caractères maximum."
+     * )
      */
     private $password;
 

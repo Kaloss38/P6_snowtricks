@@ -6,14 +6,19 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
  * @UniqueEntity(
- *      fields={"name", "slug"},
- *      errorPath="slug",
- *      message="Ce nom de Trick est déjà utilisé"
+ *      fields = "name",
+ *      message = "Adresse email déjà utilisée."
+ * )
+ * @UniqueEntity(
+ *      fields = "slug",
+ *      message = "Nom d'utilisateur déjà utilisé."
  * )
  */
 class Trick
@@ -27,6 +32,18 @@ class Trick
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank(
+     *      message = "Le nom ne doit pas être vide."
+     * )
+     * @Assert\NotNull(
+     *      message = "Le nom ne doit pas être vide."
+     * )
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Le titre doit contenir {{ limit }} caractères minimum.",
+     *      maxMessage = "Le titre peut contenir {{ limit }} caractères maximum."
+     * )
      */
     private $name;
 
@@ -47,11 +64,27 @@ class Trick
 
     /**
      * @ORM\Column(type="text")
+     *      * @Assert\NotBlank(
+     *      message = "La description ne doit pas être vide."
+     * )
+     * @Assert\NotNull(
+     *      message = "La description ne doit pas être vide."
+     * )
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La description doit contenir {{ limit }} caractères minimum."
+     * )
      */
     private $description;
 
     /**
      * @ORM\OneToMany(targetEntity=Media::class, cascade={"persist"}, mappedBy="trick")
+     * @Assert\NotBlank(
+     *      message = "Vous devez ajouter au moins une image."
+     * )
+     * @Assert\NotNull(
+     *      message = "Vous devez ajouter au moins une image."
+     * )
      */
     private $media;
 

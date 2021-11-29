@@ -3,10 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\MediaRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
+ * @UniqueEntity(
+ *      fields = "link",
+ *      message = "Une erreur est survenue, veuillez renommer l'image."
+ * )
  */
 class Media
 {
@@ -35,6 +41,12 @@ class Media
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Le lien ne doit pas être vide."
+     * )
+     * @Assert\NotNull(
+     *      message = "Le lien ne doit pas être vide."
+     * )
      */
     private $link;
 

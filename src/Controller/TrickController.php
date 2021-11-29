@@ -43,7 +43,7 @@ class TrickController extends AbstractController
             $dateTime = new DateTime();
             $trick->setCreatedAt($dateTime);
             
-
+            
             $group = new Group();
             $group->setName($form['relatedGroup']->getData());
             $group->addTrick($trick);
