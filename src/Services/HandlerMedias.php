@@ -91,4 +91,12 @@ class HandlerMedias extends AbstractController{
             $this->em->persist($media);  
         }
     }
+
+    public function deleteAllMedias($medias)
+    {
+        foreach($medias as $media)
+        {
+            $this->em->remove($media);
+        }
+    }
 }

@@ -14,11 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=TrickRepository::class)
  * @UniqueEntity(
  *      fields = "name",
- *      message = "Adresse email déjà utilisée."
+ *      message = "Ce nom de trick est déjà utilisée."
  * )
  * @UniqueEntity(
  *      fields = "slug",
- *      message = "Nom d'utilisateur déjà utilisé."
+ *      message = "Ce nom de trick est déjà utilisé."
  * )
  */
 class Trick

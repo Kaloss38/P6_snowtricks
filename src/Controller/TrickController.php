@@ -19,11 +19,13 @@ class TrickController extends AbstractController
 {
     private $slugger;
     private $em;
+    private $handlerMedias;
 
-    public function __construct(SluggerInterface $slugger, EntityManagerInterface $em)
+    public function __construct(SluggerInterface $slugger, EntityManagerInterface $em, HandlerMedias $handlerMedias)
     {
         $this->slugger = $slugger;
         $this->em = $em;
+        $this->handlerMedias = $handlerMedias;
     }
 
     /**
@@ -43,19 +45,18 @@ class TrickController extends AbstractController
             $dateTime = new DateTime();
             $trick->setCreatedAt($dateTime);
             
-            
             $group = new Group();
             $group->setName($form['relatedGroup']->getData());
             $group->addTrick($trick);
 
             $thumbnail = $form['thumbnail']->getData();
-            $handlerMedias->addPicture($thumbnail, $trick, 1);
+            $this->handlerMedias->addPicture($thumbnail, $trick, 1);
             
             $pictures = $request->files->all()['trick']['media'];
-            $handlerMedias->addPictures($pictures, $trick);
+            $this->handlerMedias->addPictures($pictures, $trick);
 
             $videos= $form['videos'];
-            $handlerMedias->addVideo($videos, $trick);
+            $this->handlerMedias->addVideo($videos, $trick);
 
             $this->em->persist($group);
             $this->em->persist($trick);    
@@ -72,9 +73,11 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{slug}", name="trick")
      */
-    public function show($slug)
+    public function show(Trick $trick)
     {
-
+        return $this->render('trick/show.html.twig', [
+            'trick' => $trick    
+        ]);
     }
 
     /**
@@ -88,10 +91,20 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/trick/{id}/delete", name="trick_delete")
+     * @Route("/trick/{id}/delete", name="trick_delete", methods={"POST"})
      */
-    public function delete($slug)
+    public function delete(Request $request, Trick $trick)
     {
+        
+        if ($this->isCsrfTokenValid('trick_delete_' . $trick->getId(), $request->request->get('csrf_token'))) {
+            $this->handlerMedias->deleteAllMedias($trick->getMedia());
+            $this->em->remove($trick);
+            
+            $this->em->flush();
+        }
 
+        $this->addflash('success', 'Le trick a bien été supprimé.');
+
+        return $this->redirectToRoute('home');
     }
 }
