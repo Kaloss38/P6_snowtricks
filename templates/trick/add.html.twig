@@ -23,7 +23,7 @@
                 {{ form_row(form.media) }}
         
                   <div class="custom-file">
-                    <input type="file" id="trick_media_0_picturefile" name="trick[media][0][picturefile]" lang="fr" class="custom-file-input">
+                    <input type="file" id="trick_media_0_picturefile" name="trick[media][0][picturefile]" lang="fr" class="custom-file-input" required="required">
                     <label for="trick_media_0_picturefile" class="custom-file-label"></label>
                   </div>
               </div>
@@ -39,7 +39,7 @@
                 {{ form_row(form.videos) }}
 
                   <div class="custom-file">
-                    <input type="text" id="trick_videos_0_picturefile" name="trick[videos][0][videoframe]" lang="fr" class="form-control"></textarea>
+                    <textarea id="trick_videos_0_picturefile" name="trick[videos][0][videoframe]" lang="fr" class="form-control"></textarea>
                     <label for="trick_videos_0_videoframe"></label>
                   </div>
               </div>

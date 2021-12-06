@@ -92,11 +92,37 @@ class HandlerMedias extends AbstractController{
         }
     }
 
-    public function deleteAllMedias($medias)
+    public function updateThumbnail(Trick $trick, $thumbnail)
     {
-        foreach($medias as $media)
+        if($thumbnail)
         {
-            $this->em->remove($media);
+            $trickThumbnail = $this->em->getRepository(Media::class)->getThumbnail($trick);
+            $newThumbnail = $this->movePicture($thumbnail);
+            $trickThumbnail->setLink($newThumbnail);
+        }
+    }
+
+    public function updatePictures(Trick $trick, array $pictures)
+    {
+        foreach($pictures as $key => $picture)
+        {
+            if($picture['picturefile'])
+            {
+                $newPicture = $this->movePicture($picture['picturefile']);
+                $trick->getMedia()->toArray()[$key]->setLink($newPicture);
+            }
+        }
+    }
+
+    public function updateVideos(Trick $trick, $videos)
+    {
+        foreach($videos as $key => $video)
+        {
+            $newVideo = $videos[$key]['videoframe']->getData();
+            if($newVideo != $trick->getMedia()->toArray()[$key]->getLink())
+            {
+                $trick->getMedia()->toArray()[$key]->setLink($newVideo);
+            }
         }
     }
 }

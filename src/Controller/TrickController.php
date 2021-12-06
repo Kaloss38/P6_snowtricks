@@ -29,7 +29,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/trick/add", name="trick_add")
+     * @Route("/trick/add", name="trick_add", methods={"GET", "POST"})
      */
     public function add(Request $request, HandlerMedias $handlerMedias): Response
     {
@@ -62,6 +62,8 @@ class TrickController extends AbstractController
             $this->em->persist($trick);    
             $this->em->flush();
 
+            $this->addflash('success', 'Le trick a bien été créé.');
+
             return $this->redirectToRoute('home');
         }
          
@@ -81,12 +83,35 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/trick/{slug}/edit", name="trick_edit")
+     * @Route("/trick/{slug}/edit", name="trick_edit", methods={"GET", "POST"})
      */
-    public function edit(Trick $trick)
+    public function edit(Trick $trick, Request $request)
     {
+        $form = $this->createForm(TrickType::class, $trick, [
+            'required' => false
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setSlug($this->slugger->slug($trick->getName()));
+            $trick->getRelatedGroup()->setName($form['relatedGroup']->getData());
+            //update thumbnail
+            $this->handlerMedias->updateThumbnail($trick, $form['thumbnail']->getData());
+            //update images
+            $medias = $request->files->all()['trick']['media'];
+            $this->handlerMedias->updatePictures($trick, $medias);
+            //update videos
+            $videos = $form['videos'];
+            $this->handlerMedias->updateVideos($trick, $videos);
+            $this->em->flush();
+            $this->addflash('success', 'Le trick a bien été modifié.');
+            return $this->redirectToRoute('home');  
+        }
+
         return $this->render('trick/edit.html.twig', [
-            
+            'form' => $form->createView(),
+            'trick' => $trick    
         ]);
     }
 
@@ -97,13 +122,13 @@ class TrickController extends AbstractController
     {
         
         if ($this->isCsrfTokenValid('trick_delete_' . $trick->getId(), $request->request->get('csrf_token'))) {
-            $this->handlerMedias->deleteAllMedias($trick->getMedia());
+            // $this->handlerMedias->deleteAllMedias($trick->getMedia());
             $this->em->remove($trick);
             
             $this->em->flush();
-        }
 
-        $this->addflash('success', 'Le trick a bien été supprimé.');
+            $this->addflash('success', 'Le trick a bien été supprimé.');
+        }
 
         return $this->redirectToRoute('home');
     }

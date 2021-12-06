@@ -17,6 +17,7 @@ class PictureType extends AbstractType
             ->add('picturefile', FileType::class, [
                 'label' => false,
                 'mapped' => false,
+                'required' => false,
                 'constraints' => [
                     new File([
                         'mimeTypes' => [

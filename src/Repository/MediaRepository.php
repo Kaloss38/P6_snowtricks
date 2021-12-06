@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Media;
+use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -36,15 +37,20 @@ class MediaRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Media
+    
+    public function getThumbnail(Trick $trick): ?Media
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('m.isThumbnail = :isThumbnail')
+            ->setParameter('isThumbnail', true)
+            ->andWhere('m.type = :type')
+            ->setParameter('type', 'image')
+            ->join('m.trick', 't')
+            ->andWhere('t.id = :trick')
+            ->setParameter('trick', $trick)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+    
 }

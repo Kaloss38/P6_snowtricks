@@ -25,12 +25,14 @@ class TrickType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Quel nom souhaitez-vous donner à votre trick ?',
+                'required' => $options['required'],
                 'attr' => [
                     'placeholder' => 'Nommez votre trick'
                 ]
             ])
             ->add('relatedGroup', ChoiceType::class, [
                 'mapped' => false,
+                'required' => $options['required'],
                 'choices' => [
                     'Flip' => 'Flip',
                     'Grab' => 'Grab',
@@ -38,14 +40,10 @@ class TrickType extends AbstractType
                     'Rotation' => 'Rotation',
                 ]
             ])
-            // ->add('relatedGroup', EntityType::class, [
-            //     'class' => Group::class,
-            //     'choice_label' => 'name',
-            //     'label' => 'Groupe'
-            // ])
             ->add('thumbnail', FileType::class, [
                 'label' => 'Choisissez votre image à la une',
                 'mapped' => false,
+                'required' => $options['required'],
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
@@ -65,6 +63,8 @@ class TrickType extends AbstractType
             ])
             ->add('media', CollectionType::class,[
                 'label' => 'Ajoutez une ou des photos à la gallerie',
+                'mapped' => $options['mapped'],
+                'required' => $options['required'],
                 'entry_type' =>  PictureType::class,
                 'by_reference' => false,
                 'allow_add' => true
@@ -72,6 +72,7 @@ class TrickType extends AbstractType
             ->add('videos', CollectionType::class,[
                 'label' => 'Ajoutez un lien youtube',
                 'entry_type' => VideoType::class,
+                'required' => $options['required'],
                 'mapped' => false,
                 'by_reference' => false,
                 'allow_add' => true

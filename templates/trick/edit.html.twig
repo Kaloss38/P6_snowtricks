@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un trick - snowtricks{% endblock %}
+
+{% block content %}
+    <div class="container">
+          {% set trickMedias = trick.media %}
+          <h1>Mettre à jour {{ trick.name }}</h1>
+          {{ form_start(form) }}
+              <p>{{ form_errors(form) }}</p>
+              {{ form_row(form.name) }}
+              
+              {{form_row(form.relatedGroup, {value: trick.relatedGroup.name }) }}
+              <h3>Image à la une</h3>
+              <div class="d-flex align-self-center">
+                {% for i, picture in trickMedias %}
+                    {% if picture.isThumbnail %}
+                    <img src="{{ asset("assets/images/tricks/"~ picture.link)}}" alt="{{ trick.name }}" class="img-thumbnail miniature">
+                    {% endif %}
+                {% endfor %}
+                
+                {{ form_widget(form.thumbnail, { 'attr': {'class': 'ml-4'} }) }}
+                
+              </div>
+              {{ form_row(form.description) }}  
+              <h3>Bibliothèque des images</h3>
+              {% for i, picture in trickMedias %}
+                {% if not picture.isThumbnail and picture.type == "image" %}
+                    <div class="d-flex">
+                    <img src="{{ asset("assets/images/tricks/"~ picture.link)}}" alt="{{ trick.name }}" class="img-thumbnail miniature">
+                    <div>
+                        <label class="ml-4">Changer l'image</label>
+                        {{ form_widget(form.media[i].picturefile, { 'attr': {'class': 'ml-4'} })}}
+                    </div>
+                    </div>
+                {% endif %}
+              {% endfor %}
+
+              <h3>Bibliothèque des vidéos</h3>
+              {% for i, picture in trickMedias %}
+                {% if not picture.isThumbnail and picture.type == "video" %}
+                    {{ picture.link|raw }}
+                    <div class="d-flex">
+                        <label class="ml-4">Changer la vidéo</label>
+                        <textarea id="trick_videos_{{i}}_videoframe" name="trick[videos][{{i}}][videoframe]" lang="fr" class="form-control" >{{ picture.link }}</textarea>
+                    </div>
+                {% endif %}
+              {% endfor %}
+              {{ form_row(form._token) }}
+              {{form_row(form.submit)}}
+          {{ form_end(form, {'render_rest': false}) }}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+  {{ parent() }}
+
+{% endblock %}
