@@ -31,7 +31,7 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/add", name="trick_add", methods={"GET", "POST"})
      */
-    public function add(Request $request, HandlerMedias $handlerMedias): Response
+    public function add(Request $request): Response
     {
         $trick = new Trick();
         
@@ -42,8 +42,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setSlug($this->slugger->slug($trick->getName()));
             $trick->setUser($this->getUser());
-            $dateTime = new DateTime();
-            $trick->setCreatedAt($dateTime);
+            
             
             $group = new Group();
             $group->setName($form['relatedGroup']->getData());
@@ -73,7 +72,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/trick/{slug}", name="trick")
+     * @Route("/trick/{slug}", name="trick", methods={"GET", "POST"})
      */
     public function show(Trick $trick)
     {
@@ -96,6 +95,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setSlug($this->slugger->slug($trick->getName()));
             $trick->getRelatedGroup()->setName($form['relatedGroup']->getData());
+            $trick->setUpdatedAt(new DateTime());
             //update thumbnail
             $this->handlerMedias->updateThumbnail($trick, $form['thumbnail']->getData());
             //update images
