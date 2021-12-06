@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un trick - snowtricks{% endblock %}
+
+{% block content %}
+    <div class="container">
+          <h1>Créer un Trick</h1>
+          {{ form_start(form) }}
+
+              {{ form_row(form.name) }}
+
+              {{ form_row(form.relatedGroup) }}
+
+              {{ form_row(form.thumbnail) }}
+
+              {{ form_row(form.description) }}
+
+              <div id="medias-fields-list"
+                data-prototype="{{ form_widget(form.media.vars.prototype)|e }}"
+                data-widget-tags="{{ '<p></p>'|e }}"
+                data-widget-counter="1">
+
+                {{ form_row(form.media) }}
+        
+                  <div class="custom-file">
+                    <input type="file" id="trick_media_0_picturefile" name="trick[media][0][picturefile]" lang="fr" class="custom-file-input" required="required">
+                    <label for="trick_media_0_picturefile" class="custom-file-label"></label>
+                  </div>
+              </div>
+              <button type="button" class="add-another-collection-widget" data-list-selector="#medias-fields-list">
+                Ajouter une photo
+              </button>
+
+              <div id="videos-fields-list"
+                data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
+                data-widget-tags="{{ '<p></p>'|e }}"
+                data-widget-counter="1">
+
+                {{ form_row(form.videos) }}
+
+                  <div class="custom-file">
+                    <textarea id="trick_videos_0_picturefile" name="trick[videos][0][videoframe]" lang="fr" class="form-control"></textarea>
+                    <label for="trick_videos_0_videoframe"></label>
+                  </div>
+              </div>
+              <button type="button" class="add-another-collection-widget" data-list-selector="#videos-fields-list">
+                Ajouter une vidéo
+              </button>
+              
+          {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+  {{ parent() }}
+  <script src="{{asset('assets/js/js-extra/add-another-collection-widget.js')}}" type="text/javascript"></script>
+{% endblock %}

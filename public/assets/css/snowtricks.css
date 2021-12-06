@@ -41,3 +41,11 @@ body{
     background-color: #dfeaff;
     padding-top: 25px;
 }
+
+.col-form-label{
+    display: none;
+}
+
+.miniature{
+    height:12em;
+}
