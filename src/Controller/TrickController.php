@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use DateTime;
 use App\Entity\Group;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Services\HandlerMedias;
 use Doctrine\ORM\EntityManagerInterface;
@@ -73,10 +75,26 @@ class TrickController extends AbstractController
     /**
      * @Route("/{slug}", name="trick", methods={"GET", "POST"})
      */
-    public function show(Trick $trick)
+    public function show(Trick $trick, Request $request)
     {
+        $comment = new Comment();
+        
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setTrick($trick);
+            $comment->setUser($this->getUser());
+            $this->em->persist($comment);
+            $this->em->flush();
+            
+            $this->addFlash('success', 'Votre commentaire à bien été ajouté');
+        }
+        
         return $this->render('trick/show.html.twig', [
-            'trick' => $trick    
+            'trick' => $trick,
+            'form' => $form->createView()   
         ]);
     }
 

@@ -95,13 +95,23 @@
                 <p>modifié le <strong>{{ trick.updatedAt|date('d/m/Y', 'Europe/Paris') }}</strong></p>
             {% endif %}
         </section>
-        <br>
         <hr>
+        {% if app.user %}
         <section id="form-comment">
-
+            {{ form(form) }}
         </section>
+        <hr>
+        {% endif %}
         <section id="comments">
-        
+            <h2 class="text-center">Tous les commentaires</h2>
+            {% for comment in trick.comments %}
+                <div>
+                    <p>{{ comment.user.pseudo }}</p>
+                    <p>{{ comment.content }}</p>
+                </div>
+            {% else %}
+                    
+            {% endfor %}
         </section>
     </div>
 {% endblock %}
