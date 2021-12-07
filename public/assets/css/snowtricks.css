@@ -49,3 +49,43 @@ body{
 .miniature{
     height:12em;
 }
+
+#trick-toolbar
+{
+    border: 3px solid black;
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    padding: 5px;
+}
+
+#media-gallery
+{
+    overflow: scroll;
+    overflow-y: hidden;
+    scrollbar-color: red yellow;
+}
+
+.media-img
+{
+    cursor: pointer !important;
+}
+
+.media-img:hover
+{
+    filter: grayscale(100%);
+}
+
+::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+    background: white;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #393812;
+}
+
+::-webkit-scrollbar-corner {
+    background: #000;
+}

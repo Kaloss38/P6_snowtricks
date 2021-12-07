@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Group;
-use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Services\HandlerMedias;
@@ -72,7 +71,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/trick/{slug}", name="trick", methods={"GET", "POST"})
+     * @Route("/{slug}", name="trick", methods={"GET", "POST"})
      */
     public function show(Trick $trick)
     {
