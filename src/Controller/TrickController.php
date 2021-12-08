@@ -73,7 +73,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}", name="trick", methods={"GET", "POST"})
+     * @Route("/trick/{slug}", name="trick", methods={"GET", "POST"})
      */
     public function show(Trick $trick, Request $request)
     {
@@ -103,6 +103,7 @@ class TrickController extends AbstractController
      */
     public function edit(Trick $trick, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $form = $this->createForm(TrickType::class, $trick, [
             'required' => false
         ]);
@@ -137,7 +138,7 @@ class TrickController extends AbstractController
      */
     public function delete(Request $request, Trick $trick)
     {
-        
+        $this->denyAccessUnlessGranted('ROLE_USER');
         if ($this->isCsrfTokenValid('trick_delete_' . $trick->getId(), $request->request->get('csrf_token'))) {
             // $this->handlerMedias->deleteAllMedias($trick->getMedia());
             $this->em->remove($trick);

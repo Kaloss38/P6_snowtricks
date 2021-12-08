@@ -29,7 +29,7 @@ class DashboardController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $newProfilPicture = $request->files->all()['user_picture']['picturefile'];
+            $newProfilPicture = $request->files->all()['user_picture']['image'];
             $this->handlerMedias->updateUserProfilPicture($newProfilPicture, $user);
             $this->addFlash('success', 'Votre commentaire à bien été ajouté');
         }
