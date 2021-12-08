@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserPictureType extends AbstractType
 {
@@ -28,6 +29,9 @@ class UserPictureType extends AbstractType
                     ])
                 ]
                 
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Modifier mon image'
             ])
         ;
     }
