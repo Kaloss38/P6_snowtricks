@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Entity\Media;
 use App\Entity\Trick;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -38,17 +39,27 @@ class HandlerMedias extends AbstractController{
         }
     }
 
-    private function movePicture(UploadedFile $file)
+    private function movePicture(UploadedFile $file, User $user = null)
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
         $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
         
         try {
-            $file->move(
-                $this->getParameter('app.pictures.directory'),
-                $newFilename
-            );
+            
+            if($user)
+            {
+                $file->move(
+                    $this->getParameter('app.pictures.users.directory'),
+                    $newFilename
+                );
+            }
+            else{
+                $file->move(
+                    $this->getParameter('app.pictures.directory'),
+                    $newFilename
+                );
+            }
             
             
         } catch (FileException $e) {
@@ -56,6 +67,13 @@ class HandlerMedias extends AbstractController{
         }
 
         return $newFilename;    
+    }
+
+    public function updateUserProfilPicture(UploadedFile $file, User $user)
+    {
+        $newProfilPicture = $this->movePicture($file, $user);
+        $user->setImage($newProfilPicture);
+        $this->em->flush();
     }
     
 

@@ -105,9 +105,20 @@
         <section id="comments">
             <h2 class="text-center">Tous les commentaires</h2>
             {% for comment in trick.comments %}
-                <div>
-                    <p>{{ comment.user.pseudo }}</p>
-                    <p>{{ comment.content }}</p>
+                <div class="d-flex">
+                    <div class="user-comment-thumbnail">
+                    {% if comment.user.image %}
+                        <img class="comment-thumbnail" src="{{ asset('assets/images/users/'~ comment.user.image)}}">
+                    {% else %}
+                        <img class="comment-thumbnail" src="{{ asset('assets/images/default-user.jpg') }}">
+                    {% endif %}
+                    
+                        
+                    </div>
+                    <div>
+                        <p>{{ comment.user.pseudo }}</p>
+                        <p>{{ comment.content }}</p>
+                    </div>
                 </div>
             {% else %}
                     
