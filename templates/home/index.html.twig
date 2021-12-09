@@ -19,7 +19,9 @@
                 <div class="m-2 col-2 card p-0">
                     {% for media in trick.media %}
                         {% if media.isThumbnail %}
-                            <img class="card-img-top" src="{{ asset("assets/images/tricks/"~ media.link)}}" alt="snowboard {{ trick.name }}">
+                            <a href="{{ path('trick', {'slug' : trick.slug}) }}">
+                                <img class="card-img-top" src="{{ asset("assets/images/tricks/"~ media.link)}}" alt="snowboard {{ trick.name }}">
+                            </a>
                         {% endif %}
                         
                     {% endfor %}
@@ -57,7 +59,7 @@
                                             </button>
                                         </form>
                                     </div>
-                                    </div>
+                                </div>
                             </div>
                         
                     </div>
@@ -68,7 +70,6 @@
             {% else %}
                         Aucun trick pour le moment, enregistrez-en un !
             {% endfor %}
-            
         </section>
     </div>
     
