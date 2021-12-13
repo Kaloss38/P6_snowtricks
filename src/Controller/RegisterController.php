@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Services\HandlerMails;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class RegisterController extends AbstractController
 {
     private $entityManager;
+    private $handlerMails;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, HandlerMails $handlerMails)
     {
         $this->entityManager = $entityManager;
+        $this->handlerMails = $handlerMails;
     }
     
     /**
@@ -32,13 +35,20 @@ class RegisterController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $user = $form->getData();
+            $token = bin2hex(random_bytes(100));
+            $user->setToken($token);
+
             $password = $hasher->hashPassword($user, $user->getPassword());
             $user->setPassword($password);
+
+            $this->handlerMails->sendEmailForUserAccountValidation($user);
             
             $this->entityManager->persist($user);
             $this->entityManager->flush();
+
+            $this->addFlash('sucess', 'Inscription prise en compte, Un e-mail vous a été envoyé afin de valider votre compte');
         }
+        
         return $this->render('register/index.html.twig', [
             'form' => $form->createView()
         ]);

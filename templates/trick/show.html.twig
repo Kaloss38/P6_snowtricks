@@ -100,8 +100,10 @@
         <section id="form-comment">
             {{ form(form) }}
         </section>
-        <hr>
+        {% else %}
+            <p><a href="{{ path('app_login')}}">Connectez-vous</a> pour réagir à ce trick sinon <a href="{{ path('register')}}">inscrivez-vous</a></p>
         {% endif %}
+        <hr>
         <section id="comments">
             <h2 class="text-center">Tous les commentaires</h2>
             {% for comment in trick.comments %}
@@ -121,7 +123,7 @@
                     </div>
                 </div>
             {% else %}
-                    
+                <p>Aucun commentaires pour le moment    
             {% endfor %}
         </section>
     </div>

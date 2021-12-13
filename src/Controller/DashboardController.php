@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\UserPictureType;
 use App\Services\HandlerMedias;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class DashboardController extends AbstractController
 {
@@ -18,10 +21,12 @@ class DashboardController extends AbstractController
         $this->handlerMedias = $handlerMedias;
     }
     /**
-     * @Route("/dashboard", name="dashboard")
+     * @Route("/dashboard/{id}", name="dashboard")
+     * @IsGranted("ROLE_USER")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, User $user): Response
     {
+        $this->isGranted("view", $user);
         $user = $this->getUser();
 
         $form = $this->createForm(UserPictureType::class);

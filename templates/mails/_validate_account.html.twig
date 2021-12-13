@@ -1,0 +1,13 @@
+{% apply inky_to_html|inline_css(source("@styles/snowtricks.css")) %}
+
+<h3>Bonjour {{ user.pseudo }}</h3>
+
+<p>Afin de valider votre compte, merci de cliquer sur le lien suivant :</p>
+<br>
+<a href="{{ url("app_account_validation", {"token" : user.token}) }}">Valider mon adresse e-mail</a>
+<br>
+<p>Bonne journée à vous,</p>
+<br>
+<p>L'équipe Snowtricks</p>
+
+{% endapply %}
