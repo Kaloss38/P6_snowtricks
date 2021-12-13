@@ -39,7 +39,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-item-custom ml-auto">
             {% if app.user %}
-                <a href="{{ path('trick_add') }}">Tricks</a> | <a href="{{ path('app_logout') }}">Déconnexion</a>
+                <a href="{{ path('trick_add') }}">Tricks</a> | 
+                <a href="{{ path('dashboard') }}">Mon compte</a> | 
+                <a href="{{ path('app_logout') }}">Déconnexion</a>
             {% else %}
                 <a href="{{ path('app_login') }}">Connexion</a> | <a href="{{ path('register') }}">Inscription</a>
             {% endif %}

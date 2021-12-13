@@ -76,6 +76,25 @@ body{
     filter: grayscale(100%);
 }
 
+.user-comment-thumbnail
+{
+    width: 4em;
+    margin-right: 1em;
+    padding-top: 0.2em;
+}
+
+.comment-thumbnail{
+    width: 4.5em;
+    border-radius: 50%;
+    border: 3px solid black;
+    
+}
+
+#user-profil-picture
+{
+    width:12em;
+    border: 3px solid black;    
+}
 ::-webkit-scrollbar {
     height: 12px;
     width: 12px;
