@@ -106,7 +106,7 @@
         <hr>
         <section id="comments">
             <h2 class="text-center">Tous les commentaires</h2>
-            {% for comment in trick.comments %}
+            {% for comment in comments.comments %}
                 <div class="d-flex">
                     <div class="user-comment-thumbnail">
                     {% if comment.user.image %}
@@ -125,6 +125,20 @@
             {% else %}
                 <p>Aucun commentaires pour le moment    
             {% endfor %}
+            {% if comments.comments %}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item {{(comments.page == 1) ? 'disabled' : '' }}"><a class="page-link" href="{{'?page=' ~ (comments.page > 1) ? '?page=' ~ (comments.page - 1)  : '' }}">Précedent</a></li>
+                        {% set pages = (comments.totalComments / comments.limit)|round(0, 'ceil') %}
+                        {% for item in 1..pages %}
+                            <li class="page-item {{(comments.page == item) ? 'active' : ''}}"><a class="page-link" href="{{ path('trick', {'slug' : trick.slug, 'page' : item}) }}">{{item}}</a></li>
+                        {% endfor %}
+                        
+                        <li class="page-item {{(comments.page == comments.totalComments or pages == 1) ? 'disabled' : '' }}"><a class="page-link" href="{{'?page=' ~ (comments.page < pages) ? '?page=' ~ (comments.page + 1)  : '' }}">Suivant</a></li>
+                    </ul>
+                </nav>    
+            {% endif %}
+            
         </section>
     </div>
 {% endblock %}
