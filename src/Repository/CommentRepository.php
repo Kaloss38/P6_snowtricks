@@ -54,6 +54,7 @@ class CommentRepository extends ServiceEntityRepository
             ->join('c.trick', 't')
             ->andWhere('t.id = :trick')
             ->setParameter('trick', $trick)
+            ->orderBy('c.id', 'DESC')
             ->setFirstResult(($page * $limit) - $limit)
             ->setMaxResults($limit)
             ->getQuery()

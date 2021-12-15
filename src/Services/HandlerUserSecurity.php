@@ -28,7 +28,7 @@ class HandlerUserSecurity extends AbstractController{
                 $user->setToken($token);
                 $this->em->flush();
                 $this->handlerMails->sendEmailForUserForgetPassword($user);
-                $this->addFlash('sucess', 'Un e-mail vous a été envoyé afin de réinitialiser votre mot de passe');
+                $this->addFlash('success', 'Un e-mail vous a été envoyé afin de réinitialiser votre mot de passe');
             }
             else{
                 $this->addFlash('error', 'Une erreur est survenue, merci de vérifier vos informations');

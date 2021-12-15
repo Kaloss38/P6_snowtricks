@@ -46,7 +46,7 @@ class RegisterController extends AbstractController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            $this->addFlash('sucess', 'Inscription prise en compte, Un e-mail vous a été envoyé afin de valider votre compte');
+            $this->addFlash('success', 'Inscription prise en compte, Un e-mail vous a été envoyé afin de valider votre compte');
         }
         
         return $this->render('register/index.html.twig', [

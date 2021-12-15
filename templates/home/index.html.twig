@@ -12,6 +12,18 @@
     </section>
     <div class="container-lg">
         <h2 class="display-4 text-center mb-3">Tous les tricks</h2>
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-success">
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
         <section id="trickslist-home-container" class="d-flex flex-wrap justify-content-between mb-3">
             {% for trick in tricks %}
                 
