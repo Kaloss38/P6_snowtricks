@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Services\HandlerMails;
 use App\Form\ForgetPasswordType;
 use App\Form\ReinitPasswordType;
+use App\Services\HandlerUserSecurity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,7 +56,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/mot-de-passe-oublie", name="app_reset_password", methods={"GET","POST"})
      */
-    public function forgetPassword(Request $request): Response
+    public function forgetPassword(Request $request, HandlerUserSecurity $handlerUserSecurity): Response
     {
         $form = $this->createForm(ForgetPasswordType::class);
 
@@ -63,22 +64,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form['email']->getData();
-
-            $user = $this->em->getRepository(User::class)->findOneByEmail($email);
-            
-            if($user && $user->getIsValidated())
-            {
-                $token = bin2hex(random_bytes(100));
-                
-                $user->setToken($token);
-                $this->em->flush();
-                $this->handlerMails->sendEmailForUserForgetPassword($user);
-                $this->addFlash('sucess', 'Un e-mail vous a été envoyé afin de réinitialiser votre mot de passe');
-            }
-            else{
-                $this->addFlash('error', 'Une erreur est survenue, merci de vérifier vos informations');
-            }
-
+            $handlerUserSecurity->sendForgetPasswordLink($email);
         }
 
         return $this->render('security/forget_password.html.twig', [

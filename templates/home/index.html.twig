@@ -16,7 +16,7 @@
             {% for trick in tricks %}
                 
                 
-                <div class="m-2 col-2 card p-0">
+                <div class="m-2 col-2 card p-0 tricks">
                     {% for media in trick.media %}
                         {% if media.isThumbnail %}
                             <a href="{{ path('trick', {'slug' : trick.slug}) }}">
@@ -71,6 +71,14 @@
                         Aucun trick pour le moment, enregistrez-en un !
             {% endfor %}
         </section>
+        <div class="text-center">
+            <button id="load-more" class="btn btn-primary">Voir plus</button>
+        </div>
     </div>
     
+{% endblock %}
+
+{% block javascript %}
+  {{ parent() }}
+  <script src="{{asset('assets/js/js-extra/load-more-tricks.js')}}" type="text/javascript"></script>
 {% endblock %}

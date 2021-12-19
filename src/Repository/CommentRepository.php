@@ -47,4 +47,17 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getPaginatedComments($trick, $page, $limit)
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.trick', 't')
+            ->andWhere('t.id = :trick')
+            ->setParameter('trick', $trick)
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;    
+    }
 }

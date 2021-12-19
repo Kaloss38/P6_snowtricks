@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Comment;
 use DateTime;
+use App\Entity\Comment;
 use App\Entity\Group;
 use App\Entity\Trick;
 use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Services\HandlerMedias;
+use App\Services\Pagination;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,7 +76,7 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{slug}", name="trick", methods={"GET", "POST"})
      */
-    public function show(Trick $trick, Request $request)
+    public function show(Trick $trick, Request $request, Pagination $pagination)
     {
         $comment = new Comment();
         
@@ -92,8 +93,12 @@ class TrickController extends AbstractController
             $this->addFlash('success', 'Votre commentaire à bien été ajouté');
         }
         
+        $comments = $pagination->paginateComments($request, $trick, 10);
+        
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'comments' => $comments,
             'form' => $form->createView()   
         ]);
     }
