@@ -52,6 +52,19 @@
     </section>
     <br>
     <div class="container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-success">
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+    
         <section id="media-gallery" class="d-flex" style="width:100%">
             {% for media in trick.media %}
                 {% if not media.isThumbnail and media.type == 'image' %}

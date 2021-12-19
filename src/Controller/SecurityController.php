@@ -92,7 +92,7 @@ class SecurityController extends AbstractController
             
             $this->em->flush();
 
-            $this->addFlash('sucess', 'Votre mot de passe a bien été modifié, connectez-vous !');  
+            $this->addFlash('success', 'Votre mot de passe a bien été modifié, connectez-vous !');  
             
             return $this->redirectToRoute('app_login');
         }
@@ -115,7 +115,7 @@ class SecurityController extends AbstractController
             
             $this->em->flush();
 
-            $this->addFlash('sucess', 'Votre compte a bien été validé, vous pouvez maintenant vous connectez');  
+            $this->addFlash('success', 'Votre compte a bien été validé, vous pouvez maintenant vous connectez');  
             
             return $this->redirectToRoute('app_login');
     }

@@ -15,6 +15,18 @@
                 </div>
             {% endif %}
             <h3>{{ user.pseudo }}</h3>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-success">
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
             <div>
                 {{ form_start(form) }}
                     {{ form_widget(form) }}
