@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      message = "Adresse email déjà utilisée."
  * )
  * @UniqueEntity(
- *      fields = "username",
+ *      fields = "pseudo",
  *      message = "Nom d'utilisateur déjà utilisé."
  * )
  */
@@ -96,10 +96,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isValidated;
+
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->setIsValidated(0);
     }
 
     public function getId(): ?int
@@ -271,6 +282,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(bool $isValidated): self
+    {
+        $this->isValidated = $isValidated;
 
         return $this;
     }

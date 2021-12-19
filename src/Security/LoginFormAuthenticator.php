@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,17 +24,28 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
+    private $em;
+
     private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator, EntityManagerInterface $em)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->em = $em;
     }
 
     public function authenticate(Request $request): PassportInterface
     {
         $email = $request->request->get('email', '');
 
+        // $user = $this->em->getRepository(User::class)->findOneByEmail($email);
+
+        // if(!$user->getIsValidated())
+        // {
+            
+        // }
+        
+        
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
