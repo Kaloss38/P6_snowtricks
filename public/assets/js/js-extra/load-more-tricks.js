@@ -4,8 +4,6 @@ $(function(){
     const limit = 10;
     hideButton(tricksLength, limit);
 
-    
-    
     //hide tricks to limit
     $('.tricks').each(function(i){
         hideTricks($(this), i, limit)

@@ -47,6 +47,10 @@ class Media
      * @Assert\NotNull(
      *      message = "Le lien ne doit pas être vide."
      * )
+     * @Assert\Type(
+     *     type = "string",
+     *     message = "La valeur {{ value }} n'est pas un {{ type }} valide."
+     * )
      */
     private $link;
 
