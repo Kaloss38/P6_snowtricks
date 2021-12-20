@@ -2,6 +2,9 @@ body{
     position: relative;
 }
 
+.container{
+    min-height: 36em;
+}
 /** HOME **/
 #present-home-container{
     position: relative;
@@ -30,6 +33,10 @@ body{
     transform: translate(-50%, -50%);
 }
 
+.card-title{
+    font-size: 0.8em;
+    padding-right: 0.5em;
+}
 .navbar-item-custom, .navbar-item-custom a{
     color: white;
 }
@@ -38,10 +45,15 @@ body{
     text-align: center;
     bottom: 0;
     width: 100%;
-    background-color: #dfeaff;
-    padding-top: 25px;
+    color: white;
+    background-color: #333333;
+    padding:1em;
+    margin-top: 2em;
 }
 
+.footer-custom p {
+    margin-bottom: 0 !important;
+}
 .col-form-label{
     display: none;
 }
@@ -95,6 +107,29 @@ body{
     width:12em;
     border: 3px solid black;    
 }
+
+.card-img-top {
+    width: 100%;
+    height: 10vw;
+    object-fit: cover;
+}
+
+.edit .custom-file  {
+    display: block !important;
+    max-width: 18em !important;
+}
+
+.auth-forms{
+    border: 1px solid black;
+    padding: 2em;
+}
+
+.comment{
+    padding: 1em;
+    border: 1px solid rgb(209, 207, 207);
+    margin-top: 2em;
+}
+
 ::-webkit-scrollbar {
     height: 12px;
     width: 12px;
@@ -107,4 +142,45 @@ body{
 
 ::-webkit-scrollbar-corner {
     background: #000;
+}
+
+/* Media queries */
+
+/* X-Small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.98px) {
+    #present-home-container img {
+        height: 20em;
+        object-fit: cover;
+    }
+    .card-img-top {
+        height: 50vw;
+    }
+    .centered h1{
+        font-size: 3em !important;
+    }
+    .centered h2{
+        font-size: 2em !important;
+    }
+}
+
+/*Small devices (landscape phones, less than 768px)*/
+@media (max-width: 767.98px) {
+    .card-img-top {
+        height: 50vw;
+    }    
+}
+
+/*Medium devices (tablets, less than 992px)*/
+@media (max-width: 991.98px) {
+
+}
+
+/* Large devices (desktops, less than 1200px)*/
+@media (max-width: 1199.98px) {
+
+}
+
+/*X-Large devices (large desktops, less than 1400px)*/
+@media (max-width: 1399.98px) {
+
 }

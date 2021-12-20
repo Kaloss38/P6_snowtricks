@@ -5,6 +5,7 @@
 {% block content %}
     <div class="container">
         <section id="user-profil" class="text-center pt-4">
+            <div class="col-lg-6 col-md-6 col-sm-12 text-center mt-4 auth-forms" style="margin:auto;">
             {% if user.image %}
                 <div id="profil-picture">
                     <img id="user-profil-picture" src="{{ asset("assets/images/users/"~ user.image)}}">
@@ -29,12 +30,13 @@
             {% endfor %}
             <div>
                 {{ form_start(form) }}
-                    {{ form_widget(form) }}
+                    <center>{{ form_widget(form) }}</center>
                 {{ form_end(form) }}
+            </div>
             </div>
         </section>
            <div class="container-lg">
-        <h2 class="display-4 text-center mb-3">Tous vos tricks</h2>
+        <h2 class="display-4 text-center mb-3 mt-3">Tous vos tricks</h2>
         <section id="trickslist-home-container" class="d-flex flex-wrap justify-content-between mb-3">
             {% for trick in user.tricks %}
                 

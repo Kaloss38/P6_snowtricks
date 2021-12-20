@@ -4,49 +4,60 @@
 
 {% block content %}
     <div class="container">
-          <h1>Créer un Trick</h1>
+          <h1 class="text-center mb-4 mt-4">Créer un Trick</h1>
           {{ form_start(form) }}
-
-              {{ form_row(form.name) }}
-
-              {{ form_row(form.relatedGroup) }}
-
-              {{ form_row(form.thumbnail) }}
-
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                {{ form_row(form.name) }}
+                </div>
+                <div class="form-group col-md-4">
+                {{ form_row(form.relatedGroup) }} 
+                </div>
+                <div class="form-group col-md-4">
+                {{ form_row(form.thumbnail) }}
+                </div>
+              </div>
               {{ form_row(form.description) }}
+              <hr>
+              <label for="trick_thumbnail">Ajouter une ou plusieurs photos</label>
+                  <div id="medias-fields-list"
+                  data-prototype="{{ form_widget(form.media.vars.prototype)|e }}"
+                  data-widget-tags="{{ '<p></p>'|e }}"
+                  data-widget-counter="1">
 
-              <div id="medias-fields-list"
-                data-prototype="{{ form_widget(form.media.vars.prototype)|e }}"
-                data-widget-tags="{{ '<p></p>'|e }}"
-                data-widget-counter="1">
+                  {{ form_row(form.media) }}
+          
+                    <div class="custom-file">
+                      <input type="file" id="trick_media_0_picturefile" name="trick[media][0][picturefile]" lang="fr" class="custom-file-input" required="required">
+                      <label for="trick_media_0_picturefile" class="custom-file-label"></label>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                  <button type="button" class="add-another-collection-widget btn btn-secondary" data-list-selector="#medias-fields-list">
+                    Ajouter une photo
+                  </button>
+                </div>
+                <br>
+                <hr>
+                  <label for="trick_thumbnail" class="mt-4">Ajouter une ou plusieurs vidéos</label>
+                  <div id="videos-fields-list"
+                  data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
+                  data-widget-tags="{{ '<p></p>'|e }}"
+                  data-widget-counter="1">
 
-                {{ form_row(form.media) }}
-        
-                  <div class="custom-file">
-                    <input type="file" id="trick_media_0_picturefile" name="trick[media][0][picturefile]" lang="fr" class="custom-file-input" required="required">
-                    <label for="trick_media_0_picturefile" class="custom-file-label"></label>
-                  </div>
-              </div>
-              <button type="button" class="add-another-collection-widget" data-list-selector="#medias-fields-list">
-                Ajouter une photo
-              </button>
+                    {{ form_row(form.videos) }}
 
-              <div id="videos-fields-list"
-                data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
-                data-widget-tags="{{ '<p></p>'|e }}"
-                data-widget-counter="1">
-
-                {{ form_row(form.videos) }}
-
-                  <div class="custom-file">
-                    <textarea id="trick_videos_0_picturefile" name="trick[videos][0][videoframe]" lang="fr" class="form-control" required="required"></textarea>
-                    <label for="trick_videos_0_videoframe"></label>
-                  </div>
-              </div>
-              <button type="button" class="add-another-collection-widget" data-list-selector="#videos-fields-list">
-                Ajouter une vidéo
-              </button>
-              
+                    <div class="custom-file">
+                      <textarea id="trick_videos_0_picturefile" name="trick[videos][0][videoframe]" lang="fr" class="form-control" required="required"></textarea>
+                      <label for="trick_videos_0_videoframe"></label>
+                    </div>
+                </div>
+                <div class="text-center">
+                  <button type="button" class="add-another-collection-widget btn btn-secondary" data-list-selector="#videos-fields-list">
+                    Ajouter une vidéo
+                  </button>
+                </div>
+      
           {{ form_end(form) }}
     </div>
 {% endblock %}
