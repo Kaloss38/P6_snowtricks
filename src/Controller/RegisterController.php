@@ -40,7 +40,7 @@ class RegisterController extends AbstractController
 
             $password = $hasher->hashPassword($user, $user->getPassword());
             $user->setPassword($password);
-
+            
             $this->handlerMails->sendEmailForUserAccountValidation($user);
             
             $this->entityManager->persist($user);

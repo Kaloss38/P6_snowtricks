@@ -106,6 +106,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $isValidated;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isConsenting;
+
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
@@ -306,6 +311,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsValidated(bool $isValidated): self
     {
         $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    public function getIsConsenting(): ?bool
+    {
+        return $this->isConsenting;
+    }
+
+    public function setIsConsenting(bool $isConsenting): self
+    {
+        $this->isConsenting = $isConsenting;
 
         return $this;
     }
