@@ -19,6 +19,11 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
+    public function findAll()
+    {
+        return $this->findBy(array(), array('createdAt' => 'DESC'));
+    }
+
     // /**
     //  * @return Trick[] Returns an array of Trick objects
     //  */
