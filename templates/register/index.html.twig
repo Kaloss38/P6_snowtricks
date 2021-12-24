@@ -16,7 +16,24 @@
                 </div>
             </div>
         {% endfor %}
-        {{ form(form) }}
+        {{ form_start(form) }}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
+            </div>
+
+            {{ form_row(form.email) }}
+            {{ form_row(form.pseudo) }}
+            {{ form_row(form.password) }}
+            
+            {% set termsOfUseFormGroup %}
+                {{ form_row(form.isConsenting) }}
+            {% endset %}
+            {{ termsOfUseFormGroup|replace({'#DOCUMENTATION#':'<a class="has-text-underline" href="' ~ path('mentions-legales') ~ '" target="_blank">Mentions légales</a>'})|raw }}
+            {# <div class="form-check">        
+                <input type="checkbox" id="register_isConsenting" name="register[isConsenting]" required="required" class="form-check-input" value="1">
+                <label class="form-check-label required" for="register_isConsenting">J'ai lu(e) et j'accèpte les mentions légales</label>
+            </div> #}
+        {{ form_end(form) }}
     </div>
 </div>
 {% endblock %}

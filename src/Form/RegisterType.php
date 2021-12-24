@@ -5,10 +5,12 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
@@ -45,6 +47,13 @@ class RegisterType extends AbstractType
                         'placeholder' => 'Merci confirmez votre mot de passe'
                     ]
                 ]
+            ])
+            ->add('isConsenting', CheckboxType::class, [
+                'constraints' => [
+                    new IsTrue(['message' => 'Avez-vu lu notre politique de traitement de données ?'])
+                ],
+                'required' => false,
+                'label' => 'Je confirme avoir lu les #DOCUMENTATION# concernant le traitement de mes données personnelles.'
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "S'inscrire"

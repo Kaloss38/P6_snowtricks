@@ -1,6 +1,6 @@
 # P6 OPC - Snowtricks - Jonathan Billard
 
-Here, my first project with STMFONY, let's clone to start it !
+Here, my first project with SYMFONY, let's clone to start it !
 
 ## Starting project
 
