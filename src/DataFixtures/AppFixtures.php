@@ -29,6 +29,8 @@ class AppFixtures extends Fixture
             ->setEmail('admin@snowtricks.com')
             ->setPassword($this->hasher->hashPassword($user, '123456'))
             ->setIsValidated(1)
+            ->setIsConsenting(1)
+            ->setRoles(['ROLE_USER']);
         ;
 
         $manager->persist($user);

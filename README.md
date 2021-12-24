@@ -9,10 +9,12 @@ Here, my first project with SYMFONY, let's clone to start it !
 ### requirements
 
 - PHP 7.4+
+- Composer
+- Symfony @CLI
 
 ### Packages Installation
 
-First, clone project then install all composer packages with command line : ``composer install``
+First, clone or download project then install all composer packages with command line : ``composer install``
 
 ### Create Database & create tricks fixtures
 
@@ -43,6 +45,7 @@ to run local server, run this command line : ``symfony serv``
 
 - [Mailer & Gmail Smtp](https://symfony.com/doc/current/mailer.html)
 - [String component](https://symfony.com/doc/current/components/string.html)
+- [TwigErrorRenderer](https://symfony.com/doc/current/controller/error_pages.html)
 
 
 
