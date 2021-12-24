@@ -63,7 +63,7 @@
                 {% endif %}
               {% endfor %}
               {{ form_row(form._token) }}
-              {{form_row(form.submit)}}
+              {{form_row(form.submit, {'label': 'Modifier'})}}
           {{ form_end(form, {'render_rest': false}) }}
     </div>
 {% endblock %}

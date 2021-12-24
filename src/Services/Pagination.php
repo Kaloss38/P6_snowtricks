@@ -39,6 +39,7 @@ class Pagination{
             $page = $totalPages;
             $comments = $this->em->getRepository(Comment::class)->getPaginatedComments($trick, $page, $limit);
         }
+        
         $comments = $this->em->getRepository(Comment::class)->getPaginatedComments($trick, $page, $limit);
         
         if(!$comments)

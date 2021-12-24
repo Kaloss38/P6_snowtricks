@@ -1,5 +1,7 @@
 # P6 OPC - Snowtricks - Jonathan Billard
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/32a44790ed6666a0f23f/maintainability)](https://codeclimate.com/github/Kaloss38/P6_snowtricks/maintainability)
+
 Here, my first project with SYMFONY, let's clone to start it !
 
 ## Starting project
@@ -7,10 +9,12 @@ Here, my first project with SYMFONY, let's clone to start it !
 ### requirements
 
 - PHP 7.4+
+- Composer
+- Symfony @CLI
 
 ### Packages Installation
 
-First, clone project then install all composer packages with command line : ``composer install``
+First, clone or download project then install all composer packages with command line : ``composer install``
 
 ### Create Database & create tricks fixtures
 
@@ -18,7 +22,7 @@ First, clone project then install all composer packages with command line : ``co
 
 _your .env, database url line example_:
 ```
-    DATABASE_URL="mysql://root@127.0.0.1:3306/snowtricks?serverVersion=mariadb-10.4.11" 
+    DATABASE_URL="mysql://root:password@127.0.0.1:3306/snowtricks?serverVersion=mariadb-10.4.11" 
 ```
 - Then, to create your database, run this command line : ``symfony console doctrine:database:create``
 
@@ -33,7 +37,15 @@ _your .env, mailer gmail DSN line example_:
 
 > :warning: **Gmail SHOULD NOT be used on production, use it in development only**
 
-### Maintainability Code Climate Badge
+### Run local server
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/32a44790ed6666a0f23f/maintainability)](https://codeclimate.com/github/Kaloss38/P6_snowtricks/maintainability)
+to run local server, run this command line : ``symfony serv``
+
+### Symfony packages ( installed with composer )
+
+- [Mailer & Gmail Smtp](https://symfony.com/doc/current/mailer.html)
+- [String component](https://symfony.com/doc/current/components/string.html)
+- [TwigErrorRenderer](https://symfony.com/doc/current/controller/error_pages.html)
+
+
 
