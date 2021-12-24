@@ -24,13 +24,14 @@ class TrickType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Quel nom souhaitez-vous donner à votre trick ?',
+                'label' => 'Saisissez un nom',
                 'required' => $options['required'],
                 'attr' => [
                     'placeholder' => 'Nommez votre trick'
                 ]
             ])
             ->add('relatedGroup', ChoiceType::class, [
+                'label' => 'Choisissez un groupe',
                 'mapped' => false,
                 'required' => $options['required'],
                 'choices' => [
@@ -77,7 +78,12 @@ class TrickType extends AbstractType
                 'by_reference' => false,
                 'allow_add' => true
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Ajouter',
+                "attr" => [
+                    "class" => "btn btn-primary btn-lg btn-block mt-4"
+                ]
+            ])
         ;
     }
 

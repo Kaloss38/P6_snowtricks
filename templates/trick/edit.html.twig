@@ -3,30 +3,42 @@
 {% block title %}Modifier un trick - snowtricks{% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container edit">
           {% set trickMedias = trick.media %}
-          <h1>Mettre à jour {{ trick.name }}</h1>
+          <h1 class="text-center mb-4 mt-4">Mettre à jour {{ trick.name }}</h1>
           {{ form_start(form) }}
               <p>{{ form_errors(form) }}</p>
-              {{ form_row(form.name) }}
-              
-              {{form_row(form.relatedGroup, {value: trick.relatedGroup.name }) }}
-              <h3>Image à la une</h3>
-              <div class="d-flex align-self-center">
-                {% for i, picture in trickMedias %}
-                    {% if picture.isThumbnail %}
-                    <img src="{{ asset("assets/images/tricks/"~ picture.link)}}" alt="{{ trick.name }}" class="img-thumbnail miniature">
-                    {% endif %}
-                {% endfor %}
-                
-                {{ form_widget(form.thumbnail, { 'attr': {'class': 'ml-4'} }) }}
-                
+              <div class="text-center mb-4">
+                <h3>Image à la une</h3>
+                <div class="d-block">
+                  {% for i, picture in trickMedias %}
+                      {% if picture.isThumbnail %}
+                      <img src="{{ asset("assets/images/tricks/"~ picture.link)}}" alt="{{ trick.name }}" class="img-thumbnail miniature mb-2">
+                      {% endif %}
+                  {% endfor %}
+                  
+                  <center>{{ form_widget(form.thumbnail, { 'attr': {'class': 'mt-4'} }) }}</center>
+                  
+                </div>
               </div>
-              {{ form_row(form.description) }}  
-              <h3>Bibliothèque des images</h3>
+              <hr>
+              <div class="form-row mt-3">
+                <div class="form-group col-md-6">
+                  {{ form_row(form.name) }}
+                </div>
+                <div class="form-group col-md-6">
+                  {{form_row(form.relatedGroup, {value: trick.relatedGroup.name }) }}
+                </div>
+              </div>
+              
+              {{ form_row(form.description, { 'attr': {'rows': 6} }) }} 
+              <hr>
+              
+              <h3 class="text-center mt-4 mb-4">Bibliothèque des images</h3>
+              <div class="d-flex">
               {% for i, picture in trickMedias %}
                 {% if not picture.isThumbnail and picture.type == "image" %}
-                    <div class="d-flex">
+                    <div class="d-block pr-4">
                     <img src="{{ asset("assets/images/tricks/"~ picture.link)}}" alt="{{ trick.name }}" class="img-thumbnail miniature">
                     <div>
                         <label class="ml-4">Changer l'image</label>
@@ -35,14 +47,18 @@
                     </div>
                 {% endif %}
               {% endfor %}
-
-              <h3>Bibliothèque des vidéos</h3>
+              </div>
+              <hr>
+              <h3 class="text-center mt-4 mb-4">Bibliothèque des vidéos</h3>
               {% for i, picture in trickMedias %}
                 {% if not picture.isThumbnail and picture.type == "video" %}
-                    {{ picture.link|raw }}
-                    <div class="d-flex">
-                        <label class="ml-4">Changer la vidéo</label>
-                        <textarea id="trick_videos_{{i}}_videoframe" name="trick[videos][{{i}}][videoframe]" lang="fr" class="form-control" >{{ picture.link }}</textarea>
+                    
+                    <div class="d-lg-flex justify-content-between mt-4">
+                        {{ picture.link|raw }}
+                        <div class="d-block col-lg-8 col-md-12 col-sm-12">
+                          <label class="">Changer la vidéo</label>
+                          <textarea rows="6" id="trick_videos_{{i}}_videoframe" name="trick[videos][{{i}}][videoframe]" lang="fr" class="form-control" >{{ picture.link }}</textarea>
+                        </div>
                     </div>
                 {% endif %}
               {% endfor %}
@@ -54,5 +70,5 @@
 
 {% block javascript %}
   {{ parent() }}
-
+  <script src="{{asset('assets/js/js-extra/add-another-collection-widget.js')}}" type="text/javascript"></script> 
 {% endblock %}
