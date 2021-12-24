@@ -95,7 +95,6 @@ class TrickController extends AbstractController
         
         $comments = $pagination->paginateComments($request, $trick, 10);
         
-
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'comments' => $comments,

@@ -17,14 +17,35 @@ class Pagination{
 
     public function paginateComments(Request $request , $trick, $limit)
     {
-        //a mettre dans un service
+        if(count($trick->getComments()) == 0)
+        {
+            return;
+        }
+
         //On récupère le numéro de page
         $page = (int) $request->get("page", 1);
-        // on récupère les commentaire de la page
-        $comments = $this->em->getRepository(Comment::class)->getPaginatedComments($trick, $page, $limit);
-        //on récupère le nombre total de commentaires
+        
+        //If page > totalPages
+        if($page === 0){
+            $page = 1;
+            $comments = $this->em->getRepository(Comment::class)->getPaginatedComments($trick, $page, $limit);
+        }
+        
         $totalComments = count($trick->getComments());
+        $totalPages = (int) ceil($totalComments / $limit);
 
+        //If page > totalPages
+        if($page > $totalPages){
+            $page = $totalPages;
+            $comments = $this->em->getRepository(Comment::class)->getPaginatedComments($trick, $page, $limit);
+        }
+        $comments = $this->em->getRepository(Comment::class)->getPaginatedComments($trick, $page, $limit);
+        
+        if(!$comments)
+        {
+            return;
+        }
+        
         return [
             "comments" => $comments,
             "page" => $page,
