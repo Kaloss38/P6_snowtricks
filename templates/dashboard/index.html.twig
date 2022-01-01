@@ -41,7 +41,7 @@
             {% for trick in user.tricks %}
                 
                 
-                <div class="m-2 col-2 card p-0">
+                <div class="m-2 col-lg-2 col-md-4 col-sm-12 card p-0">
                     {% for media in trick.media %}
                         {% if media.isThumbnail %}
                             <a href="{{ path('trick', {'slug' : trick.slug}) }}">
