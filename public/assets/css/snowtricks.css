@@ -130,6 +130,11 @@ body{
     margin-top: 2em;
 }
 
+.error-content
+{
+    min-height: 36em;
+}
+
 ::-webkit-scrollbar {
     height: 12px;
     width: 12px;
