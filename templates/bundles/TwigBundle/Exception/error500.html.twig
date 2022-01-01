@@ -2,9 +2,11 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <h1>Page non trouvée</h1>
+    <div class="container error-content">
+        <h1 class="text-center">Page non trouvée</h1>
 
-    <p>
-        La page que vous demandée n'existe pas, <a href="{{ path('home') }}">retourner vers l'accueil</a>.
-    </p>
+        <p class="text-center">
+            La page que vous demandée n'existe pas, <a href="{{ path('home') }}">retourner vers l'accueil</a>.
+        </p>
+    </div>
 {% endblock %}
