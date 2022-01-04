@@ -24,7 +24,8 @@ _your .env, database url line example_:
 ```
     DATABASE_URL="mysql://root:password@127.0.0.1:3306/snowtricks?serverVersion=mariadb-10.4.11" 
 ```
-- Then, to create your database, run this command line : ``symfony console doctrine:database:create``
+- To create your database, run this command line : ``symfony console doctrine:database:create``
+- Then to add datas tricks : ``symfony console doctrine:fixtures:load``
 
 ### Mailer settings
 

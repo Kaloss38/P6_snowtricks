@@ -93,7 +93,7 @@ class TrickController extends AbstractController
             $this->addFlash('success', 'Votre commentaire à bien été ajouté');
         }
         
-        $comments = $pagination->paginateComments($request, $trick, 10);
+        $comments = $pagination->paginateComments($request, $trick, 5);
         
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,

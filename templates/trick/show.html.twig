@@ -132,7 +132,7 @@
                     <div class="ml-4">
                         <p>
                             <strong>{{ comment.user.pseudo }}</strong> - le
-                            <span>{{ comment.createdAt|date('d/m/Y', 'Europe/Paris') }} à {{ comment.createdAt|date('h:m', 'Europe/Paris') }}</span> 
+                            <span>{{ comment.createdAt|date('d/m/Y à H:i', 'Europe/Paris') }}</span> 
                         </p>
                         <p>{{ comment.content }}</p>
                     </div>
